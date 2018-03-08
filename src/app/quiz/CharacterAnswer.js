@@ -42,7 +42,13 @@ class CharacterAnswer extends React.Component {
       name
     } = this.props.character;
 
-    const imagePath = `/dev-assets/images/characters/${friendlyName(name)}.jpg`;
+
+    let imagePath = `/dev-assets/images/characters/${friendlyName(name)}.jpg`;
+
+    // correria
+    if (process.env.NODE_ENV === 'production') {
+      imagePath = `images/characters/${friendlyName(name)}.jpg`;
+    }
 
     return (
       <div className="card-container">
