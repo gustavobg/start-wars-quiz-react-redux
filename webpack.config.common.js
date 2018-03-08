@@ -5,7 +5,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: [
-    'react-hot-loader/patch',
     './src/app/main.js'
   ], // string | object | array
   context: __dirname,

@@ -1,0 +1,61 @@
+.loading-block.loading-wrapper {
+  border-radius: 4px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  background: #fff;
+  &.is-loading {
+    overflow: hidden;
+    max-height: 200px;
+  }
+  &.loading-done {
+    background: transparent;
+    box-shadow: none;
+  }
+}
+
+.loading-wrapper {
+  position: relative;
+  min-height: 80px;
+  &.loading-done {
+    .loading-wrapper-container {
+      display: none !important;
+    }
+  }
+}
+
+.loading-wrapper .loading-wrapper-container {
+  display: flex;
+  opacity: 0;
+  background: #fff;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 3;
+  transition: opacity .1s ease-out;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-wrapper .loading-wrapper-container .loading-wrapper-spinner {
+  opacity: 0;
+}
+
+.loading-wrapper.is-loading .loading-wrapper-container .loading-wrapper-spinner {
+  opacity: 1
+}
+
+.loading-wrapper.is-loading .loading-wrapper-container {
+  opacity: 1;
+}
+
+.loading-wrapper.hide .loading-wrapper-container {
+  z-index: 0;
+}
+
+.loading-error-message {
+  font-size: 1.6em;
+  color: #5e5e5e;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 200;
+}

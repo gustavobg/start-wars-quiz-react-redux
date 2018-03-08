@@ -32,21 +32,29 @@ const Pagination = (props) => {
   const lastPage = (count <= pageSize ? 1 : Math.ceil(count / pageSize));
 
   return (
-    <div>
-      <Button
-        disabled={page === 1 || isFetching}
-        onClick={() => previousPage(props)}
-      >
-        Previous
-      </Button>
-      <Button
-        onClick={() => nextPage(props)}
-        disabled={count < pageSize || page === lastPage || isFetching}
-      >
-        Next
-      </Button>
+    <div className="pagination">
+      <div style={{ marginRight: '5px' }}>
+        <Button
+          color="primary"
+          variant="raised"
+          disabled={page === 1 || isFetching}
+          onClick={() => previousPage(props)}
+        >
+        Anterior
+        </Button>
+      </div>
+      <div style={{ marginLeft: '5px' }}>
+        <Button
+          color="primary"
+          variant="raised"
+          onClick={() => nextPage(props)}
+          disabled={count < pageSize || page === lastPage || isFetching}
+        >
+        Próximo
+        </Button>
+      </div>
     </div>
-  )
+  );
 };
 
 export default Pagination;

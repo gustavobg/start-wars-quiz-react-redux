@@ -1,148 +1,132 @@
-import React from 'react';
-import { connect } from "react-redux";
-import { fetchPeople } from "./fetchs";
-import { addCorrectAnswer, addScore, changePage, endGame, startGame, timeChange } from './reducers';
+import React, { Fragment } from 'react';
 import CharacterAnswer from './CharacterAnswer';
 import Pagination from '../shared/Pagination';
 import Timer from '../shared/Timer';
-import { Button, TextField } from 'material-ui';
-import withFormValidate from '../shared/withFormValidate';
+import { Button, Dialog } from 'material-ui';
+import EndGame from './EndGame';
+import logo from '../../images/sw-logo.png';
+import LoadingWrapper from '../shared/LoadingWrapper';
+import '../scss/main.scss';
 
-class Game extends React.PureComponent {
-  constructor(props) {
-    super(props);
-  }
-  componentWillMount() {
-    this.props.fetchPeople();
-  }
-
-  render() {
-    const {
-      people,
-      page,
-      count,
-      onChangePage,
-      isFetching,
-      pageSize,
-      correctCharacterAnswerList,
-      addCorrectAnswer,
-      addScore,
-      remainingTime,
-      onTimeChange,
-      gameStarted,
-      gameEnded,
-      startGame,
-      playerScore
-    } = this.props;
-
-    return (
-      <div>
-        {gameStarted ? (
-          <div>
-            <Timer remainingTime={remainingTime} onTimeChange={onTimeChange} />
-            {people.map((character) =>
-              <CharacterAnswer
-                addCorrectAnswer={addCorrectAnswer}
-                correctCharacterAnswerList={correctCharacterAnswerList}
-                addScore={addScore}
-                character={character}
-                key={character.name}
-              />
-            )}
-            <Pagination isFetching={isFetching} page={page} pageSize={pageSize} count={count} onChangePage={onChangePage} />
-          </div>
-        ) : (
-          <div>
-            {gameEnded ? (
-              <EndGame {...this.props} />
-            ) : (
-              <div>
-                Olá!!! Clica pra começar
-                <Button variant="raised" onClick={startGame}>Começar o jogo</Button>
-              </div>
-            )}
-          </div>
-        )}
-
-      </div>
-    )
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchPeople: () => {
-      dispatch(fetchPeople());
-    },
-    addScore: (score) => {
-      dispatch(addScore(score));
-    },
-    addCorrectAnswer: (answer) => {
-      dispatch(addCorrectAnswer(answer));
-    },
-    onChangePage: (page) => {
-      dispatch(changePage(page));
-      dispatch(fetchPeople());
-    },
-    onTimeChange: (time) => {
-      dispatch(timeChange(time));
-      if (time === 0) {
-        dispatch(endGame());
-      }
-    },
-    startGame: () => {
-      dispatch(startGame())
-    },
-    endGame: () => {
-      dispatch(endGame())
-    },
-    onSubmitFormSuccess: (values) => {
-
-    },
-    onSubmitFormError: (values, errors) => {
-    },
-  }
-};
-
-const mapStateToProps = (state) => {
-  const charactersAnswer = state.quiz.charactersAnswer;
-  const pageSize = 10;
+const Game = (props) => {
   const {
-    charactersList,
-    correctCharacterAnswerList,
+    people,
     page,
     count,
-    isFetching,
-  } = charactersAnswer;
-
-  const {
-    remainingTime,
-    gameStarted,
-    gameEnded,
-    playerScore,
-    playerName,
-    playerEmail
-  } = state.quiz.gameInfo;
-
-  return {
-    people: charactersList,
-    page,
-    count,
+    onChangePage,
     isFetching,
     pageSize,
     correctCharacterAnswerList,
+    penaltyCharacterAnswerList,
+    addCorrectAnswer,
+    addPenalty,
+    addScore,
     remainingTime,
+    onTimeChange,
     gameStarted,
     gameEnded,
+    startGame,
     playerScore,
-    initialValues: {
-      playerName,
-      playerEmail
-    }
-  }
+    openInfoModal,
+    closeInfo,
+    infoOpen,
+    characterInfo,
+    isFetchingInfo
+  } = props;
+  return (
+    <Fragment>
+      <div className="stars" />
+      <div className="twinkling" />
+      {gameStarted ? (
+        <div id="sw-characters-wrapper">
+          <Timer remainingTime={remainingTime} onTimeChange={onTimeChange} />
+          <div className="sw-character-list">
+            {people.map((character, index) =>
+              <CharacterAnswer
+                isFetching={isFetching}
+                openInfo={openInfoModal}
+                addCorrectAnswer={addCorrectAnswer}
+                addPenalty={addPenalty}
+                penaltyCharacterAnswerList={penaltyCharacterAnswerList}
+                correctCharacterAnswerList={correctCharacterAnswerList}
+                addScore={addScore}
+                character={character}
+                id={index + 1}
+                key={character.name}
+              />
+            )}
+          </div>
+          <Pagination isFetching={isFetching} page={page} pageSize={pageSize} count={count} onChangePage={onChangePage} />
+          <Dialog onClose={closeInfo} open={infoOpen}>
+            <LoadingWrapper isFetching={isFetchingInfo}>
+              {characterInfo && (
+                <div className="sw-character-info">
+                  <dl>
+                    <div>
+                      <dt>Gênero:</dt>
+                      <dd>{characterInfo.gender}</dd>
+                    </div>
+                    <div>
+                      <dt>Cor do cabelo:</dt>
+                      <dd>{characterInfo.hair_color}</dd>
+                    </div>
+                    <div>
+                      <dt>Gênero:</dt>
+                      <dd>{characterInfo.gender}</dd>
+                    </div>
+                    <div>
+                      <dt>Altura:</dt>
+                      <dd>{characterInfo.height}</dd>
+                    </div>
+                    <div>
+                      <dt>Peso:</dt>
+                      <dd>{characterInfo.mass}</dd>
+                    </div>
+                    <div>
+                      <dt>Ano de nascimento:</dt>
+                      <dd>{characterInfo.birth_year}</dd>
+                    </div>
+                    <div>
+                      <dt>Cor do cabelo:</dt>
+                      <dd>{characterInfo.hair_color}</dd>
+                    </div>
+                    <div>
+                      <dt>Cor dos olhos:</dt>
+                      <dd>{characterInfo.eye_color}</dd>
+                    </div>
+                    <div>
+                      <dt>Cor da pele:</dt>
+                      <dd>{characterInfo.skin_color}</dd>
+                    </div>
+                  </dl>
+                </div>
+              )}
+            </LoadingWrapper>
+          </Dialog>
+        </div>
+      ) : (
+        <Fragment>
+          {gameEnded ? (
+            <EndGame {...props} />
+          ) : (
+            <div id="sw-begin-wrapper">
+              <div className="sw-intro">
+                <img className="sw-logo" src={logo} alt="Star Wars" />
+                <div className="sw-help-text">
+                  <div className="sw-transform">
+                    <p>Para ganhar, acerte o maior número possível de nomes dos personagens em 2 minutos. </p>
+                    <p>Cada acerto vale 10 pontos. Você pode usar a ajuda clicando em (?), porém se acertar irá ganhar somente 5 pontos.</p>
+                    <strong>Boa sorte padawan, que a força esteja com você!</strong>
+                  </div>
+                </div>
+                <Button variant="raised" onClick={startGame}>Começar o jogo</Button>
+              </div>
+            </div>
+          )}
+        </Fragment>
+      )}
+    </Fragment>
+  );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Game);
+export default Game;

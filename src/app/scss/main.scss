@@ -1,0 +1,204 @@
+body {
+  padding: 0;
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: "Quicksand", sans-serif;
+}
+#sw-app {
+  padding: 0;
+}
+.sw-logo {
+  width: 300px;
+}
+.stars, .twinkling {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+@keyframes move-twink-back {
+  from {
+    background-position: 0 0
+  }
+  to {
+    background-position: -10000px 5000px
+  }
+}
+
+@-webkit-keyframes move-twink-back {
+  from {
+    background-position: 0 0
+  }
+  to {
+    background-position: -10000px 5000px
+  }
+}
+
+@-moz-keyframes move-twink-back {
+  from {
+    background-position: 0 0
+  }
+  to {
+    background-position: -10000px 5000px
+  }
+}
+
+@-ms-keyframes move-twink-back {
+  from {
+    background-position: 0 0
+  }
+  to {
+    background-position: -10000px 5000px
+  }
+}
+.stars, .twinkling {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.stars {
+  background: url(http://www.script-tutorials.com/demos/360/images/stars.png) top center #000;
+}
+.twinkling {
+  background: url(http://www.script-tutorials.com/demos/360/images/twinkling.png) top center;
+  -moz-animation: move-twink-back 200s linear infinite;
+  -ms-animation: move-twink-back 200s linear infinite;
+  -o-animation: move-twink-back 200s linear infinite;
+  -webkit-animation: move-twink-back 200s linear infinite;
+  animation: move-twink-back 200s linear infinite;
+}
+#sw-begin-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .sw-intro {
+    margin-top: -100px;
+    max-width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .sw-help-text {
+    position: relative;
+    width: 400px;
+    .sw-transform {
+      top: -97px;
+      text-align: justify;
+      font-size: 1.5em;
+      position: absolute;
+      transform-origin: 50% 100%;
+      transform: perspective(300px) rotateX(25deg);
+    }
+    strong {
+      color: #CCC;
+      font-weight: normal;
+      margin-bottom: 35px;
+      display: block;
+    }
+  }
+}
+#sw-endGame {
+  background: #fff;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  .sw-form {
+    display: flex;
+    flex-direction: column;
+    > div {
+      margin-bottom: 20px;
+    }
+  }
+}
+.progress {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+}
+.countdown {
+  position: absolute;
+  right: 20px;
+  top: 20px
+}
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  width: 96%;
+}
+// characters list
+.sw-character-info {
+  div {
+    display: flex;
+    margin: 10px 20px;
+    dl, dd {
+      color: #000
+    }
+    dt {
+      color: #666
+    }
+
+    dd {
+      margin-left: 10px;
+    }
+  }
+}
+#sw-characters-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .sw-character-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    //&:before, &:after {
+    //  content: "";
+    //  flex-grow: 1;
+    //  height: 1px;
+    //}
+    > .card-container {
+      flex: 0 0 176px;
+      .card {
+        max-width: 176px;
+
+        .character-input {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 10px;
+          color: #000;
+          flex-grow: 1;
+          > div, > p {
+            margin: 0
+          }
+        }
+        background: #fff;
+        margin: 0 auto 20px auto;
+        width: 88%;
+        height: 320px;
+        position: relative;
+        .info-button {
+          position: absolute;
+          right: 0;
+          svg {
+            fill: #fff;
+            stroke: rgba(0,0,0, .5)
+          }
+        }
+      }
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
+

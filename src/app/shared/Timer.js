@@ -1,4 +1,5 @@
 import React from 'react';
+import { LinearProgress } from 'material-ui';
 
 class Timer extends React.Component {
   constructor(props) {
@@ -28,7 +29,9 @@ class Timer extends React.Component {
 
   render() {
     return (
-      <div>{this.state.counter}</div>
+      <div>
+        <div className="countdown">{this.state.counter}</div>
+      </div>
     )
   }
 }

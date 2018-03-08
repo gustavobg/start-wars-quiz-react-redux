@@ -13,10 +13,8 @@ export const validate = (v) => {
 
   if (v.playerEmail.length === 0) {
     err.playerEmail = 'Informe seu e-mail';
-  } else {
-    if (!regexEmail.test(String(v.playerEmail).toLowerCase())) {
-      err.playerEmail = 'Informe um e-mail válido';
-    }
+  } else if (!regexEmail.test(String(v.playerEmail).toLowerCase())) {
+    err.playerEmail = 'Informe um e-mail válido';
   }
 
   return err;
@@ -32,15 +30,17 @@ const EndGame = (props) => {
   } = props.form;
 
   const {
-    playerScore
+    playerScore,
+    resetGame
   } = props;
 
   return (
-    <div>
-      O JOGO ACABOOOOOOOOU!<br />
-      Você conseguiu {playerScore}
-
-      <form onSubmit={handleSubmit}>
+    <div id="sw-endGame">
+      <div style={{ marginBottom: '10px' }}>
+        O JOGO ACABOU!<br />
+        Você conseguiu {playerScore}
+      </div>
+      <form className="sw-form" onSubmit={handleSubmit}>
         <TextField
           name="playerName"
           value={input.playerName}
@@ -49,7 +49,7 @@ const EndGame = (props) => {
             onChangeInput('playerName', e.target.value);
           }}
           helperText={validateErrors.playerName}
-          error={validateErrors.playerName}
+          error={validateErrors.playerName && validateErrors.playerName.length > 0}
         />
         <TextField
           name="playerEmail"
@@ -59,12 +59,14 @@ const EndGame = (props) => {
             onChangeInput('playerEmail', e.target.value);
           }}
           helperText={validateErrors.playerEmail}
-          error={validateErrors.playerEmail}
+          error={validateErrors.playerEmail && validateErrors.playerEmail.length > 0}
         />
-        <Button type="submit" variant="raised">Salvar</Button>
+        <input type="hidden" value={playerScore} />
+        <Button type="submit" onClick={resetGame} color="primary" variant="raised">Salvar</Button>
+        <Button style={{ marginTop: '10px' }} onClick={resetGame} color="primary">Jogar novamente</Button>
       </form>
     </div>
-  )
+  );
 };
 
 export default withFormValidate(EndGame, { validate });

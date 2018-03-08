@@ -77,7 +77,7 @@ const withFormValidate = (
       });
     }
 
-    handleSubmit(event) {
+    handleSubmit(event, extraProps) {
       event.preventDefault();
       if (validateComponent(this, config.validate, ns)) {
         this.props.onSubmitFormSuccess(this.state.input);
